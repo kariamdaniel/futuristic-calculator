@@ -1,19 +1,34 @@
-<!-- index.html -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Futuristic Calculator</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="calculator">
-    <!-- Screen where numbers show up -->
-    <input type="text" id="display" disabled />
-
-    <!-- Buttons -->
-    <div class="buttons">
-      <!-- We'll add buttons here later -->
+    <!-- Window Controls -->
+    <div class="app-header">
+      <div class="window-controls">
+        <span class="window-dot" style="background: #ff5f56;"></span>
+        <span class="window-dot" style="background: #ffbf21;"></span>
+        <span class="window-dot" style="background: #27c93f;"></span>
+      </div>
+      <div class="app-title">Futuristic Calculator</div>
     </div>
+
+    <!-- Theme Toggle -->
+    <button id="themeToggle" class="theme-button">🌙</button>
+
+    <!-- History Display -->
+    <div id="history"></div>
+    
+    <!-- Calculator Display -->
+    <input type="text" id="display" disabled />
+    
+    <!-- Buttons -->
+    <div class="buttons" id="buttons"></div>
   </div>
 
   <script src="script.js"></script>
