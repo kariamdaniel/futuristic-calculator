@@ -27,6 +27,7 @@ function handleInput(value) {
       currentInput = "";
     }
   } else {
+    // Continue calculation from last result
     if (lastResult !== null && /[+\-*/]/.test(value)) {
       currentInput = lastResult + value;
       lastResult = null;
@@ -76,14 +77,19 @@ function calculate(input) {
   return total;
 }
 
-// Update history display with transition
+// Update history display with smooth animation
 function updateHistoryDisplay(expression, result) {
-  historyDisplay.textContent = `${expression} = ${result}`;
-  historyDisplay.classList.add("history-transition");
+  // Force reflow to restart animation
+  historyDisplay.classList.remove("animate");
+  void historyDisplay.offsetWidth; // Trigger reflow
   
-  setTimeout(() => {
-    historyDisplay.classList.remove("history-transition");
-  }, 500);
+  // Update content
+  historyDisplay.textContent = `${expression} = ${result}`;
+  
+  // Trigger animation
+  requestAnimationFrame(() => {
+    historyDisplay.classList.add("animate");
+  });
 }
 
 // Generate buttons dynamically
@@ -181,25 +187,3 @@ themeToggle.addEventListener('click', () => {
   localStorage.setItem('theme', newTheme);
   updateThemeIcon();
 });
-// Animate history entry up and reset for next update
-function updateHistoryDisplay(expression, result) {
-  // Reset transform and opacity for smooth repeat
-  historyDisplay.style.transform = 'translateY(0) scale(1)';
-  historyDisplay.style.opacity = '0.7';
-  historyDisplay.style.fontSize = '1rem';
-
-  // Force reflow to restart animation
-  void historyDisplay.offsetWidth;
-
-  // Set new history text and trigger animation
-  historyDisplay.textContent = `${expression} = ${result}`;
-  historyDisplay.classList.add("history-move");
-
-  // Remove animation classes after transition ends
-  const onAnimationEnd = () => {
-    historyDisplay.classList.remove("history-move");
-    historyDisplay.removeEventListener("transitionend", onAnimationEnd);
-  };
-
-  historyDisplay.addEventListener("transitionend", onAnimationEnd);
-}
